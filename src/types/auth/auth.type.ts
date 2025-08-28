@@ -31,3 +31,5 @@ export interface IUser {
     auth: IAuthProvider[]
 
 }
+
+export interface IResestPassword{ id: string, newPassword: string, token: string }

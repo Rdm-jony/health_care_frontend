@@ -13,6 +13,8 @@ import Logo from "@/assets/images/Logo";
 import { toast } from "sonner";
 import { useLoginMutation } from "@/redux/features/auth/authApi";
 import LoadingButton from "@/components/loading-buttom";
+import { useState } from "react";
+import ForgetPassPage from "@/pages/ForgetPassPage";
 
 
 
@@ -24,6 +26,8 @@ const loginFormSchema = z.object({
 export function LoginForm() {
   const navigate = useNavigate()
   const [login, { isLoading }] = useLoginMutation()
+  const [openForgetPassDialog, setOpenForgetPassDialog] = useState<boolean>(false)
+
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -37,6 +41,7 @@ export function LoginForm() {
       const response = await login(data).unwrap()
       if (response?.success) {
         toast.success(response?.message)
+        navigate("/")
       }
     } catch (error: any) {
       toast.error(error?.data.message)
@@ -83,13 +88,9 @@ export function LoginForm() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="flex justify-between">Password
-
-                          {/* <ForgetPassword email={form.getValues("email")}>
-                            <p className="ml-auto text-sm font-normal underline-offset-4 hover:underline">
-                              Forgot your password?
-                            </p>
-                          </ForgetPassword> */}
-
+                          <p onClick={() => setOpenForgetPassDialog(true)} className="ml-auto text-sm font-normal underline-offset-4 hover:underline">
+                            Forgot your password?
+                          </p>
                         </FormLabel>
 
                         <FormControl>
@@ -146,6 +147,7 @@ export function LoginForm() {
         By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
         and <a href="#">Privacy Policy</a>.
       </div>
+      <ForgetPassPage open={openForgetPassDialog} setOpen={setOpenForgetPassDialog} />
     </div>
   )
 }

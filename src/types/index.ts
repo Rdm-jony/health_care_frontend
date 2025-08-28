@@ -1,4 +1,4 @@
-export type {IRegister,ILogin} from "@/types/auth/auth.type"
+export type {IRegister,ILogin,IResestPassword} from "@/types/auth/auth.type"
 
 export interface IResponse<T> {
     success: boolean,
