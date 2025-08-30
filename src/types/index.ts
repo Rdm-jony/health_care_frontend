@@ -1,8 +1,21 @@
-export type {IRegister,ILogin,IResestPassword} from "@/types/auth/auth.type"
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { ComponentType } from "react"
+
+export type { IRegister, ILogin, IResestPassword, TRole,IUser } from "@/types/auth/auth.type"
+export type { ISpecialize ,IDoctor} from "@/types/doctor/doctor.type"
 
 export interface IResponse<T> {
     success: boolean,
     message: string,
     statusCode: number,
-    data: T[] | T,
+    data: T,
+}
+
+export interface ISidebarItem {
+    title: string,
+    items: {
+        title: string,
+        url: string,
+        component: ComponentType
+    }[]
 }

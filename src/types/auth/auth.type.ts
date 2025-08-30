@@ -16,6 +16,9 @@ export interface IAuthProvider {
     providerId: string
 }
 
+export type DoctorRequest = "NONE" | "PENDING" | "PENDING" | "APPROVED"
+
+
 export interface IUser {
     _id?: string,
     name: string,
@@ -27,9 +30,10 @@ export interface IUser {
     picture?: string,
     isDeleted?: boolean,
     isVerified?: boolean,
+    permitToDoctor: DoctorRequest,
     role: TRole,
     auth: IAuthProvider[]
 
 }
 
-export interface IResestPassword{ id: string, newPassword: string, token: string }
+export interface IResestPassword { id: string, newPassword: string, token: string }
