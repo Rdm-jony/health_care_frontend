@@ -9,6 +9,7 @@ export const baseApi = createApi({
     endpoints: () => ({
 
     }),
+    tagTypes:["ME"]
 })
 
 // Export hooks for usage in functional components, which are

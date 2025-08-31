@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import type { ReactNode } from "react"
 
-export function Alert({ children, onConfirm,title}: { children: ReactNode, onConfirm: () => void,title:string }) {
+export function Alert({ children, onConfirm, title, type ,btnText}: { children: ReactNode, onConfirm: () => void, title: string, type: "delete" | "accept",btnText:string }) {
 
     const handleConfirm = () => {
         onConfirm();
@@ -31,7 +31,7 @@ export function Alert({ children, onConfirm,title}: { children: ReactNode, onCon
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleConfirm}>Continue</AlertDialogAction>
+                    <AlertDialogAction className={type == "delete" ? "bg-red-600" : "bg-primary"} onClick={handleConfirm}>{btnText}</AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

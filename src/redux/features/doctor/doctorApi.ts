@@ -18,10 +18,24 @@ export const doctorApi = baseApi.injectEndpoints({
             query: (doctorInfo) => ({
                 url: "/doctor/request-approve",
                 method: "POST",
-                data:doctorInfo
+                data: doctorInfo
             }),
+        }),
+        rejectRequest: builder.mutation<IResponse<null>, string>({
+            query: (userId) => ({
+                url: `/doctor/request-reject/${userId}`,
+                method: "PATCH",
+            }),
+        }),
+        updateDoctorProfile: builder.mutation<IResponse<null>, { data: FormData, id: string }>({
+            query: (userInfo) => ({
+                url: `/doctor/${userInfo.id}`,
+                method: "PATCH",
+                data:userInfo.data
+            }),
+            invalidatesTags:["ME"]
         }),
     })
 })
 
-export const { useGetAllSpecializationQuery,usePermitDoctorMutation } = doctorApi
+export const { useGetAllSpecializationQuery, usePermitDoctorMutation, useRejectRequestMutation,useUpdateDoctorProfileMutation } = doctorApi

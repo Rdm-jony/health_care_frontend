@@ -1,5 +1,6 @@
 import Logo from "@/assets/images/Logo"
 import { ModeToggle } from "@/components/mode-toggle"
+import ProfileMenu from "@/components/ProfileMenu"
 import { Button } from "@/components/ui/button"
 import {
     NavigationMenu,
@@ -12,6 +13,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
+import { useGetMeQuery } from "@/redux/features/auth/authApi"
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
@@ -22,6 +24,11 @@ const navigationLinks = [
 ]
 
 export default function Navbar() {
+    const { data, isLoading } = useGetMeQuery(undefined)
+    if (isLoading) {
+        return <p>loading..</p>
+    }
+    console.log(data)
     return (
         <header className="border-b px-4 md:px-6">
             <div className="flex h-16 items-center justify-between gap-4">
@@ -106,12 +113,13 @@ export default function Navbar() {
                 {/* Right side */}
                 <div className="flex items-center gap-2">
                     <ModeToggle />
-                    <Button asChild variant="ghost" size="sm" className="text-sm">
-                        <a href="#">Sign In</a>
-                    </Button>
-                    <Button asChild size="sm" className="text-sm">
-                        <a href="#">Get Started</a>
-                    </Button>
+                    {
+                        data && data?.email ? <ProfileMenu />
+                            : <Button asChild variant="ghost" size="sm" className="text-sm">
+                                <a href="#">Sign In</a>
+                            </Button>
+                    }
+
                 </div>
             </div>
         </header>

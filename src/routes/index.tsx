@@ -10,11 +10,26 @@ import { generateRoutes } from "@/utils/generateRoutes";
 import { withAuth } from "@/utils/withAuth";
 import { createBrowserRouter } from "react-router";
 import { adminSidebarItems } from "./adminSidebarItems";
+import AllDoctor from "@/pages/AllDoctor";
+import Profile from "@/pages/Profile";
 
 export const router = createBrowserRouter([
     {
         path: "/",
         Component: App,
+        children: [
+            {
+                path: "all-doctor",
+                Component: AllDoctor,
+
+            },
+            {
+                path: "profile",
+                Component: withAuth(Profile)
+            },
+           
+
+        ]
     },
     {
         path: "/login",

@@ -7,7 +7,7 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useGetAllSpecializationQuery, usePermitDoctorMutation } from "@/redux/features/doctor/doctorApi";
+import { useGetAllSpecializationQuery, useUpdateDoctorProfileMutation } from "@/redux/features/doctor/doctorApi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm, type SubmitHandler } from "react-hook-form";
 import { z } from "zod"
@@ -21,86 +21,77 @@ import {
 import { Input } from "@/components/ui/input";
 import { CircleMinus, CirclePlus } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Button } from "@/components/ui/button";
-import LoadingButton from "@/components/loading-buttom";
 import { toast } from "sonner";
+import LoadingButton from "@/components/loading-buttom";
+import { Button } from "@/components/ui/button";
 
 
 const formSchema = z.object({
+    name: z.string("not a string")
+        .min(2, { message: "Name must be at least 2 characters long." })
+        .max(50, { message: "Name cannot exceed 50 characters." }),
+
+    phone: z
+        .string()
+        .regex(/^(?:\+8801\d{9}|01\d{9})$/, {
+            message: "Phone number must be valid for Bangladesh. Format: +8801XXXXXXXXX or 01XXXXXXXXX",
+        })
+        .or(z.literal("")),
+    address: z.string(),
+    gender: z.enum(["MALE", "FEMALE", "OTHER"], "Select gender"),
     about: z.string().min(1, "About is required"),
 
-    availableTimes: z
-        .array(
-            z
-                .object({
-                    day: z.enum([
-                        "Monday",
-                        "Tuesday",
-                        "Wednesday",
-                        "Thursday",
-                        "Friday",
-                        "Saturday",
-                        "Sunday",
-                    ]),
-                    startTime: z
-                        .string()
-                        .regex(/^([01]\d|2[0-3]):([0-5]\d)$/, "Invalid time format (HH:mm)"),
-                    endTime: z
-                        .string()
-                        .regex(/^([01]\d|2[0-3]):([0-5]\d)$/, "Invalid time format (HH:mm)"),
-                    slotDuration: z.coerce
-                        .number()
-                        .min(5, "Minimum slot duration is 5 minutes")
-                        .max(120, "Maximum slot duration is 120 minutes"),
-                })
-                .refine(
-                    (time) => {
-                        const [sh, sm] = time.startTime.split(":").map(Number);
-                        const [eh, em] = time.endTime.split(":").map(Number);
-                        const start = sh * 60 + sm;
-                        const end = eh * 60 + em;
-                        return end > start;
-                    },
-                    {
-                        message: "endTime must be later than startTime",
-                        path: ["endTime"],
-                    }
-                )
-        )
-        .nonempty("At least one available slot is required"),
+    availableTimes: z.array(
+        z.object({
+            day: z.enum([
+                "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+            ]),
+            startTime: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/),
+            endTime: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/),
+            slotDuration: z.coerce.number().min(5).max(120),
+        }).refine((time) => {
+            const [sh, sm] = time.startTime.split(":").map(Number);
+            const [eh, em] = time.endTime.split(":").map(Number);
+            return eh * 60 + em > sh * 60 + sm;
+        }, {
+            message: "endTime must be later than startTime",
+            path: ["endTime"],
+        })
+    ).nonempty("At least one available slot is required"),
 
     degree: z.string().min(1, "Degree is required"),
-
-    experience: z.coerce
-        .number({ message: "Experience is required" })
-        .min(0, "Experience cannot be negative"),
-
-    fees: z.coerce
-        .number({ message: "Fees is required" })
-        .min(0, "Fees must be a positive number"),
-
+    experience: z.coerce.number().min(0),
+    fees: z.coerce.number().min(0),
     licenceNumber: z.string().min(1, "Licence number is required"),
-
     specialization: z.string().min(1, "Specialization is required"),
 });
 
 
 
-const PermitDoctorDialog = ({ open, setOpen, userId }: { open: boolean, setOpen: (bool: boolean) => void, userId: string }) => {
+
+const EditDoctorsProfile = ({ doctorData, open, setOpen }: { doctorData: any, open: boolean, setOpen: (bool: boolean) => void }) => {
     const { data: specializations, isLoading: specializeLoading } = useGetAllSpecializationQuery(undefined)
-    const [approved, { isLoading }] = usePermitDoctorMutation()
+    const [updateDoctor, { isLoading: uploadLoading }] = useUpdateDoctorProfileMutation()
+
+    // const [approved, { isLoading }] = usePermitDoctorMutation()
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema) as any,
         defaultValues: {
-            about: "",
-            availableTimes: [{ day: "Monday", startTime: "", endTime: "", slotDuration: 0 }],
-            degree: "",
-            experience: undefined,
-            fees: undefined,
-            licenceNumber: "",
-            specialization: ""
+            name: doctorData.name || "",
+            phone: doctorData.phone || "",
+            address: doctorData.address || "",
+            gender: doctorData.gender || "male",
+
+            about: doctorData.about || "",
+            availableTimes: doctorData.availableTimes || [{ day: "Monday", startTime: "", endTime: "", slotDuration: 0 }],
+            degree: doctorData.degree || "",
+            experience: doctorData.experience || undefined,
+            fees: doctorData.fees || undefined,
+            licenceNumber: doctorData.licenceNumber || "",
+            specialization: doctorData.specialization || ""
         }
+
     })
 
     const { fields, append, remove } = useFieldArray({
@@ -108,13 +99,14 @@ const PermitDoctorDialog = ({ open, setOpen, userId }: { open: boolean, setOpen:
         name: "availableTimes", // unique name for your Field Array
     });
     const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (values: z.infer<typeof formSchema>) => {
-        if (!userId) {
-            return toast.error("User Id not found")
+        if (!doctorData?._id) {
+            return toast.error("id not found")
         }
+        const formData = new FormData()
+        formData.append("data", JSON.stringify(values))
         try {
-            console.log({ user: userId, ...values })
-            const response = await approved({ user: userId, ...values }).unwrap()
-            if (response.success) {
+            const response = await updateDoctor({ data: formData, id: doctorData?._id }).unwrap()
+            if (response?.success) {
                 toast.success(response?.message)
                 setOpen(false)
             }
@@ -124,10 +116,12 @@ const PermitDoctorDialog = ({ open, setOpen, userId }: { open: boolean, setOpen:
     }
 
     return (
-        <Dialog open={open} onOpenChange={setOpen}>
+        <Dialog open={open} onOpenChange={setOpen} >
 
             <DialogContent className="max-h-[90vh] overflow-hidden">
+
                 <DialogHeader>
+
                     <DialogTitle className="text-center my-5">Flill Up all ncecessary fields</DialogTitle>
                     <DialogDescription asChild>
                         <ScrollArea className="h-[65vh] pr-2">
@@ -135,11 +129,76 @@ const PermitDoctorDialog = ({ open, setOpen, userId }: { open: boolean, setOpen:
                                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
                                     <FormField
                                         control={form.control}
+                                        name="name"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Name</FormLabel>
+                                                <FormControl>
+                                                    <Input {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    <FormField
+                                        control={form.control}
+                                        name="phone"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Phone</FormLabel>
+                                                <FormControl>
+                                                    <Input {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    <FormField
+                                        control={form.control}
+                                        name="address"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Address</FormLabel>
+                                                <FormControl>
+                                                    <Input {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    <FormField
+                                        control={form.control}
+                                        name="gender"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Gender</FormLabel>
+                                                <Select onValueChange={field.onChange} value={field.value}>
+                                                    <FormControl>
+                                                        <SelectTrigger className="w-full">
+                                                            <SelectValue placeholder="Select gender" />
+                                                        </SelectTrigger>
+                                                    </FormControl>
+                                                    <SelectContent>
+                                                        <SelectItem value="MALE">Male</SelectItem>
+                                                        <SelectItem value="FEMALE">Female</SelectItem>
+                                                        <SelectItem value="Other">Other</SelectItem>
+                                                    </SelectContent>
+                                                </Select>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    <FormField
+                                        control={form.control}
                                         name="specialization"
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel>Specialize</FormLabel>
-                                                <Select disabled={specializeLoading} onValueChange={field.onChange} >
+                                                <Select disabled={specializeLoading} defaultValue={doctorData.specialization} onValueChange={field.onChange} >
                                                     <FormControl>
                                                         <SelectTrigger className="w-full">
                                                             <SelectValue placeholder="Select a Specilizaion" />
@@ -314,7 +373,7 @@ const PermitDoctorDialog = ({ open, setOpen, userId }: { open: boolean, setOpen:
                                         )}
                                     />
                                     {
-                                        isLoading ? <LoadingButton text="Submit" /> : <Button type="submit" className="w-full">
+                                        uploadLoading ? <LoadingButton text="Submit" /> : <Button type="submit" className="w-full">
                                             Submit
                                         </Button>
                                     }
@@ -329,4 +388,4 @@ const PermitDoctorDialog = ({ open, setOpen, userId }: { open: boolean, setOpen:
     );
 };
 
-export default PermitDoctorDialog;
+export default EditDoctorsProfile;

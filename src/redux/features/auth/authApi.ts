@@ -52,7 +52,8 @@ export const authApi = baseApi.injectEndpoints({
                 url: "/user/me",
                 method: "GET"
             }),
-            transformResponse: (res) => res.data
+            transformResponse: (res) => res.data,
+            providesTags:["ME"]
         }),
         getAllPendingReq: builder.query<IUser[], void>({
             query: () => ({
