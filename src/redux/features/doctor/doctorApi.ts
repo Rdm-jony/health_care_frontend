@@ -1,5 +1,5 @@
 import { baseApi } from "@/redux/baseApi";
-import type { IDoctor, IResponse, ISpecialize } from "@/types";
+import type { IDoctor, IDoctorList, IResponse, ISpecialize } from "@/types";
 
 export const doctorApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -31,11 +31,18 @@ export const doctorApi = baseApi.injectEndpoints({
             query: (userInfo) => ({
                 url: `/doctor/${userInfo.id}`,
                 method: "PATCH",
-                data:userInfo.data
+                data: userInfo.data
             }),
-            invalidatesTags:["ME"]
+            invalidatesTags: ["ME"]
+        }),
+        allDoctors: builder.query<IResponse<IDoctorList[]>, object>({
+            query: (params) => ({
+                url: `/doctor/all`,
+                method: "GET",
+                params:params
+            }),
         }),
     })
 })
 
-export const { useGetAllSpecializationQuery, usePermitDoctorMutation, useRejectRequestMutation,useUpdateDoctorProfileMutation } = doctorApi
+export const { useGetAllSpecializationQuery, usePermitDoctorMutation, useRejectRequestMutation, useUpdateDoctorProfileMutation,useAllDoctorsQuery } = doctorApi

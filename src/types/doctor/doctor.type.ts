@@ -4,7 +4,7 @@ export interface ISpecialize {
 }
 
 
- type DayOfWeek ="Monday"|"Tuesday"|"Wednesday"|"Thursday"|"Friday"|"Saturday"|"Sunday"
+type DayOfWeek = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday"
 
 
 export interface IAvailableSlot {
@@ -22,4 +22,17 @@ export interface IDoctor {
     experience: number,
     fees: number,
     about: string
+}
+
+export interface IDoctorList {
+    _id?: string;
+    user: {
+        name: string;
+        picture?: string,
+    };
+    about: string;
+    specialization: {
+        name: string;
+    };
+
 }
