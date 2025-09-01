@@ -23,11 +23,10 @@ export default function UploadAvatar({ onChange, defaultImage }: AvatarUploaderP
             onChange(null)
         }
     }, [files, onChange])
-    
 
-    const previewUrl = files.length > 0 ? files[0]?.preview : defaultImage || null
+
+    const previewUrl = files.length > 0 ? files[0]?.preview : defaultImage
     const fileName = files[0]?.file.name || null
-
     return (
         <div className="flex flex-col items-center gap-2">
             <div className="relative inline-flex">

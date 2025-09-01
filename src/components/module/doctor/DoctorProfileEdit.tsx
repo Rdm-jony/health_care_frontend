@@ -24,6 +24,9 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "sonner";
 import LoadingButton from "@/components/loading-buttom";
 import { Button } from "@/components/ui/button";
+import UploadAvatar from "@/components/upload-avatar";
+import { useState } from "react";
+import type { FileMetadata } from "@/hooks/use-file-upload";
 
 
 const formSchema = z.object({
@@ -72,6 +75,7 @@ const formSchema = z.object({
 const EditDoctorsProfile = ({ doctorData, open, setOpen }: { doctorData: any, open: boolean, setOpen: (bool: boolean) => void }) => {
     const { data: specializations, isLoading: specializeLoading } = useGetAllSpecializationQuery(undefined)
     const [updateDoctor, { isLoading: uploadLoading }] = useUpdateDoctorProfileMutation()
+    const [image, setImage] = useState<(File | FileMetadata) | null>(null);
 
     // const [approved, { isLoading }] = usePermitDoctorMutation()
 
@@ -104,6 +108,11 @@ const EditDoctorsProfile = ({ doctorData, open, setOpen }: { doctorData: any, op
         }
         const formData = new FormData()
         formData.append("data", JSON.stringify(values))
+        if (image) {
+            formData.append("file", image as File)
+
+        }
+
         try {
             const response = await updateDoctor({ data: formData, id: doctorData?._id }).unwrap()
             if (response?.success) {
@@ -122,9 +131,11 @@ const EditDoctorsProfile = ({ doctorData, open, setOpen }: { doctorData: any, op
 
                 <DialogHeader>
 
-                    <DialogTitle className="text-center my-5">Flill Up all ncecessary fields</DialogTitle>
+                    <DialogTitle className="text-center my-5">Edit Profile</DialogTitle>
                     <DialogDescription asChild>
                         <ScrollArea className="h-[65vh] pr-2">
+                            <UploadAvatar onChange={setImage} defaultImage={doctorData?.picture} />
+
                             <Form {...form}>
                                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
                                     <FormField

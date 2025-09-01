@@ -3,49 +3,34 @@ import EditDoctorsProfile from "@/components/module/doctor/DoctorProfileEdit";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import UploadAvatar from "@/components/upload-avatar";
-import type { FileMetadata } from "@/hooks/use-file-upload";
 import { useGetMeQuery } from "@/redux/features/auth/authApi";
-import { useUpdateDoctorProfileMutation } from "@/redux/features/doctor/doctorApi";
 import { useState } from "react";
-import { toast } from "sonner";
 
 const DoctorProfile = () => {
     const [openDialog, setOpenDialog] = useState<boolean>(false)
-    const [image, setImage] = useState<(File | FileMetadata) | null>(null);
 
     const { data, isLoading } = useGetMeQuery(undefined);
-    const [updateDoctor, { isLoading: uploadLoading }] = useUpdateDoctorProfileMutation()
 
     if (isLoading) {
         return <p className="text-center">Loading...</p>;
     }
 
-    const uploadPicture = async () => {
-        if (!data?._id) {
-            return toast.error("id not found")
-        }
-        const formData = new FormData()
-        formData.append("file", image as File)
-        try {
-            const response = await updateDoctor({ data: formData, id: data?._id }).unwrap()
-            if (response?.success) {
-                toast.success(response?.message)
-                setImage(null)
-            }
-        } catch (error: any) {
-            toast.error(error?.data.message)
-        }
-
-    }
 
     return (
         <div className="max-w-3xl mx-auto mt-10">
             <Card>
                 <CardHeader className="flex justify-between items-center gap-4">
                     <div className="flex gap-20">
-                        <UploadAvatar onChange={setImage} defaultImage={data?.picture} />
+                        <div className="w-20 h-20">
+                            {
+                                data?.picture ? <img
+                                    className="size-full object-cover"
+                                    src={data?.picture}
 
+                                    style={{ objectFit: "cover" }}
+                                /> : <p>{data?.email[0]}</p>
+                            }
+                        </div>
                         <div>
                             <CardTitle className="capitalize text-2xl">{data?.name}</CardTitle>
                             <p className="text-muted-foreground text-sm">{data?.email}</p>
@@ -60,11 +45,7 @@ const DoctorProfile = () => {
 
 
                 </CardHeader>
-                <div className="ml-5">
-                    {
-                        image ? <Button variant="outline" disabled={uploadLoading} onClick={uploadPicture}>save Image</Button> : ""
-                    }
-                </div>
+
                 <CardContent className="space-y-6">
                     {/* About */}
                     <div>

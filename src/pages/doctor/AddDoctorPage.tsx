@@ -12,7 +12,7 @@ import {
 import { Check, X } from "lucide-react";
 import { Alert } from "@/components/AlertDialog";
 import { useState } from "react";
-import PermitDoctorDialog from "@/components/module/auth/admin/PermitDoctorDialog";
+import PermitDoctorDialog from "@/components/module/admin/PermitDoctorDialog";
 import { useRejectRequestMutation } from "@/redux/features/doctor/doctorApi";
 import { toast } from "sonner";
 

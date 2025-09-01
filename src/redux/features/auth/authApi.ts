@@ -53,7 +53,7 @@ export const authApi = baseApi.injectEndpoints({
                 method: "GET"
             }),
             transformResponse: (res) => res.data,
-            providesTags:["ME"]
+            providesTags: ["ME"]
         }),
         getAllPendingReq: builder.query<IUser[], void>({
             query: () => ({
@@ -62,7 +62,16 @@ export const authApi = baseApi.injectEndpoints({
             }),
             transformResponse: (res: IResponse<IUser[]>) => res.data
         }),
+        updateUser: builder.mutation<IResponse<null>, { data: FormData, id: string }>({
+            query: (userInfo) => ({
+                url: `/user/${userInfo.id}`,
+                method: "PATCH",
+                data: userInfo.data
+            }),
+            invalidatesTags: ["ME"]
+        }),
+
     })
 })
 
-export const { useRegisterMutation, useLoginMutation, useSendOtpMutation, useVerifyOtpMutation, useForgetPasswordMutation, useResetPasswordMutation, useGetMeQuery, useGetAllPendingReqQuery } = authApi
+export const { useRegisterMutation, useLoginMutation, useSendOtpMutation, useVerifyOtpMutation, useForgetPasswordMutation, useResetPasswordMutation, useGetMeQuery, useGetAllPendingReqQuery, useUpdateUserMutation } = authApi
