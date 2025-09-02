@@ -1,5 +1,5 @@
 import { baseApi } from "@/redux/baseApi";
-import type { IDoctor, IDoctorList, IResponse, ISpecialize } from "@/types";
+import type { IDoctor, IDoctorList, IResponse, ISlot, ISpecialize } from "@/types";
 
 export const doctorApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -39,10 +39,25 @@ export const doctorApi = baseApi.injectEndpoints({
             query: (params) => ({
                 url: `/doctor/all`,
                 method: "GET",
-                params:params
+                params: params
             }),
+        }),
+        getSingleDoctor: builder.query<IDoctorList, string | undefined>({
+            query: (doctorId) => ({
+                url: `/doctor/${doctorId}`,
+                method: "GET",
+            }),
+            transformResponse: (res: IResponse<IDoctorList>) => res.data
+        }),
+        getDoctorBookingSlot: builder.query<ISlot[], { id: string, date: string }>({
+            query: (data) => ({
+                url: `/doctor/slots/${data.id}?date=${data.date}`,
+                method: "GET",
+            }),
+            transformResponse: (res: IResponse<ISlot[]>) => res.data
+
         }),
     })
 })
 
-export const { useGetAllSpecializationQuery, usePermitDoctorMutation, useRejectRequestMutation, useUpdateDoctorProfileMutation,useAllDoctorsQuery } = doctorApi
+export const { useGetAllSpecializationQuery, usePermitDoctorMutation, useRejectRequestMutation, useUpdateDoctorProfileMutation, useAllDoctorsQuery, useGetSingleDoctorQuery, useGetDoctorBookingSlotQuery } = doctorApi

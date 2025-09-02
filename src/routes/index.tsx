@@ -12,6 +12,7 @@ import { createBrowserRouter } from "react-router";
 import { adminSidebarItems } from "./adminSidebarItems";
 import AllDoctor from "@/pages/AllDoctor";
 import Profile from "@/pages/Profile";
+import DoctorDetailsPage from "@/pages/doctor/DoctorDetailsPage";
 
 export const router = createBrowserRouter([
     {
@@ -27,7 +28,11 @@ export const router = createBrowserRouter([
                 path: "profile",
                 Component: withAuth(Profile)
             },
-           
+            {
+                path: "details/:id",
+                Component: DoctorDetailsPage
+            },
+
 
         ]
     },

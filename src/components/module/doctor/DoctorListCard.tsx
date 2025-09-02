@@ -11,6 +11,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import type { IDoctorList } from "@/types";
 import avatarImg from "@/assets/images/avatar.png"
+import { Link } from "react-router";
 
 const DoctorListCard = ({ doctor }: { doctor: IDoctorList }) => {
     return (
@@ -48,9 +49,11 @@ const DoctorListCard = ({ doctor }: { doctor: IDoctorList }) => {
                 <Separator className="my-2" />
 
                 <CardFooter>
-                    <Button className="w-full rounded-xl" >
-                        View Profile
-                    </Button>
+                    <Link to={`../details/${doctor?._id}`}>
+                        <Button className="w-full rounded-xl" >
+                            View Profile
+                        </Button>
+                    </Link>
                 </CardFooter>
             </div>
         </Card>

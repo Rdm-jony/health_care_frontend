@@ -1,3 +1,4 @@
+
 export interface ISpecialize {
     _id?: string,
     name: string
@@ -25,14 +26,31 @@ export interface IDoctor {
 }
 
 export interface IDoctorList {
-    _id?: string;
+    _id: string
     user: {
-        name: string;
-        picture?: string,
-    };
-    about: string;
+        name: string
+        email: string
+        phone?: string
+        gender?: string
+        address?: string
+        picture?: string
+    }
+    about: string
+    degree?: string
+    experience?: number
+    fees: number
     specialization: {
-        name: string;
-    };
-
+        name: string
+    }
+    availableTimes?: {
+        day: string
+        startTime: string
+        endTime: string
+        slotDuration: number
+    }
 }
+
+export interface ISlot {
+    startTime: string,
+    endTime: string
+}  
