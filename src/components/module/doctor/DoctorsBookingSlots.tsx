@@ -18,7 +18,7 @@ export default function DoctorSlots({ doctor }: { doctor: Partial<IDoctorList> }
     });
 
     const [booking, { isLoading: bookedLoader }] = useCreateBookingMutation();
-    const [selectedDate, setSelectedDate] = useState<string>(today.toISOString().split("T")[0]);
+    const [selectedDate, setSelectedDate] = useState<string>(today.toLocaleDateString("en-US"));
     const { data: slots, isLoading } = useGetDoctorBookingSlotQuery(
         { id: doctor?._id as string, date: selectedDate },
         { skip: !selectedDate }
@@ -34,7 +34,8 @@ export default function DoctorSlots({ doctor }: { doctor: Partial<IDoctorList> }
         const data: IBooking = {
             doctor: doctor._id,
             startTime: selectedSlot.startTime, // "16:40"
-            endTime: selectedSlot.endTime,     // "16:50"
+            endTime: selectedSlot.endTime,
+            bookingDate: new Date(selectedDate)    // "16:50"
         };
 
         try {
@@ -56,7 +57,7 @@ export default function DoctorSlots({ doctor }: { doctor: Partial<IDoctorList> }
                 {/* Date Buttons */}
                 <div className="flex gap-2 overflow-x-auto">
                     {next7Days.map((date, idx) => {
-                        const formatted = date.toISOString().split("T")[0];
+                        const formatted = date.toLocaleDateString("en-CA"); // yyyy-mm-dd
                         return (
                             <Button
                                 key={idx}
@@ -69,8 +70,7 @@ export default function DoctorSlots({ doctor }: { doctor: Partial<IDoctorList> }
                                         {date.toLocaleDateString("en-US", { weekday: "short" })}
                                     </span>
                                     <span className="text-xs">
-                                        {date.getDate()}{" "}
-                                        {date.toLocaleDateString("en-US", { month: "short" })}
+                                        {date.getDate()} {date.toLocaleDateString("en-US", { month: "short" })}
                                     </span>
                                 </div>
                             </Button>

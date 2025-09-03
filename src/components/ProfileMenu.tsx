@@ -1,4 +1,5 @@
 import {
+    BookMarked,
     ChevronDownIcon,
     SquareUser,
 } from "lucide-react"
@@ -30,6 +31,13 @@ export default function ProfileMenu() {
                     <DropdownMenuItem>
                         <SquareUser size={16} className="opacity-60" aria-hidden="true" />
                         Profile
+                    </DropdownMenuItem>
+                </Link>
+
+                <Link to="/bookings">
+                    <DropdownMenuItem>
+                        <BookMarked size={16} className="opacity-60" aria-hidden="true" />
+                        All Booking
                     </DropdownMenuItem>
                 </Link>
 

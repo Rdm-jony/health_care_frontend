@@ -1,6 +1,7 @@
 
 import { role } from "@/constants/role";
 import { adminSidebarItems } from "@/routes/adminSidebarItems";
+import { doctorSidebarItems } from "@/routes/doctorSidebarItems";
 import type { TRole } from "@/types";
 
 export const getSidebarItems = (userRole: TRole) => {
@@ -9,6 +10,8 @@ export const getSidebarItems = (userRole: TRole) => {
             return [...adminSidebarItems];
         case role.SUPER_ADMIN:
             return [...adminSidebarItems];
+        case role.DOCTOR:
+            return [...doctorSidebarItems];
 
         default:
             return [];

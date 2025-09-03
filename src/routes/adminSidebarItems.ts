@@ -1,4 +1,4 @@
-import AddDoctorPage from "@/pages/doctor/AddDoctorPage";
+import AddDoctorPage from "@/pages/admin/AddDoctorPage";
 import type { ISidebarItem } from "@/types";
 
 export const adminSidebarItems: ISidebarItem[] = [

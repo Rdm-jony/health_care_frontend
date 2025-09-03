@@ -13,6 +13,8 @@ import { adminSidebarItems } from "./adminSidebarItems";
 import AllDoctor from "@/pages/AllDoctor";
 import Profile from "@/pages/Profile";
 import DoctorDetailsPage from "@/pages/doctor/DoctorDetailsPage";
+import BookingPage from "@/pages/user/BookingPage";
+import { doctorSidebarItems } from "./doctorSidebarItems";
 
 export const router = createBrowserRouter([
     {
@@ -32,6 +34,10 @@ export const router = createBrowserRouter([
                 path: "details/:id",
                 Component: DoctorDetailsPage
             },
+            {
+                path:"bookings",
+                Component:BookingPage
+            }
 
 
         ]
@@ -56,6 +62,11 @@ export const router = createBrowserRouter([
         path: "/admin",
         Component: withAuth(DashboardLayout, role.ADMIN as TRole),
         children: [...generateRoutes(adminSidebarItems)]
+    },
+    {
+        path: "/doctor",
+        Component: withAuth(DashboardLayout, role.DOCTOR as TRole),
+        children: [...generateRoutes(doctorSidebarItems)]
     }
 
 ]);
