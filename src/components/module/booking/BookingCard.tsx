@@ -21,7 +21,7 @@ export default function BookingCard({ booking }: BookingCardProps) {
         try {
             const response = await initPayment(bookingId).unwrap()
             if (response.success) {
-                window.open(response.data)
+                window.location.href=response.data
             }
 
         } catch (error: any) {

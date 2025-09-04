@@ -15,6 +15,9 @@ import Profile from "@/pages/Profile";
 import DoctorDetailsPage from "@/pages/doctor/DoctorDetailsPage";
 import BookingPage from "@/pages/user/BookingPage";
 import { doctorSidebarItems } from "./doctorSidebarItems";
+import PaymentSuccess from "@/pages/payment/Success";
+import PaymentCancel from "@/pages/payment/Cancel";
+import PaymentFailed from "@/pages/payment/Falied";
 
 export const router = createBrowserRouter([
     {
@@ -35,8 +38,8 @@ export const router = createBrowserRouter([
                 Component: DoctorDetailsPage
             },
             {
-                path:"bookings",
-                Component:BookingPage
+                path: "bookings",
+                Component: BookingPage
             }
 
 
@@ -67,6 +70,18 @@ export const router = createBrowserRouter([
         path: "/doctor",
         Component: withAuth(DashboardLayout, role.DOCTOR as TRole),
         children: [...generateRoutes(doctorSidebarItems)]
+    },
+    {
+        path: "/payment/success",
+        Component: PaymentSuccess,
+    },
+    {
+        path: "/payment/cancel",
+        Component: PaymentCancel,
+    },
+    {
+        path: "/payment/fail",
+        Component: PaymentFailed,
     }
 
 ]);
