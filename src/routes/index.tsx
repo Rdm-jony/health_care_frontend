@@ -18,12 +18,18 @@ import { doctorSidebarItems } from "./doctorSidebarItems";
 import PaymentSuccess from "@/pages/payment/Success";
 import PaymentCancel from "@/pages/payment/Cancel";
 import PaymentFailed from "@/pages/payment/Falied";
+import Home from "@/pages/Home";
 
 export const router = createBrowserRouter([
     {
         path: "/",
         Component: App,
         children: [
+            {
+                index: true,
+                path: "",
+                Component: Home,
+            },
             {
                 path: "all-doctor",
                 Component: AllDoctor,

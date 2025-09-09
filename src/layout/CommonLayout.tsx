@@ -4,7 +4,7 @@ import Footer from "./Footer";
 
 const CommonLayout = ({ children }: { children: ReactNode }) => {
     return (
-        <div className="min-h-svh flex flex-col">
+        <div className="min-h-svh flex flex-col max-w-6xl mx-auto">
             <Navbar />
             <div className="grow container mx-auto">
                 {children}

@@ -7,9 +7,8 @@ export const getDashboardLink = (data: IUser) => {
 
     if (data.role === role.USER) {
         return { url: "/user", label: "Dashboard" }
-    } else if (data.role === role.AGENT) {
-        return { url: "/agent", label: "Dashboard" }
-    } else if (data.role === role.ADMIN || data.role === role.SUPER_ADMIN) {
+    }
+    else if (data.role === role.ADMIN || data.role === role.SUPER_ADMIN) {
         return { url: "/admin", label: "Dashboard" }
     }
     return null

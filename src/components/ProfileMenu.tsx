@@ -12,8 +12,17 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Link } from "react-router"
+import { useAppDispatch } from "@/redux/hooks"
+import { authApi, useLogoutMutation } from "@/redux/features/auth/authApi"
 
 export default function ProfileMenu() {
+    const dispatch = useAppDispatch()
+
+    const [logout] = useLogoutMutation()
+    const handleLogout = async () => {
+        await logout(null)
+        dispatch(authApi.util.resetApiState())
+    }
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -40,6 +49,12 @@ export default function ProfileMenu() {
                         All Booking
                     </DropdownMenuItem>
                 </Link>
+
+                <DropdownMenuItem onClick={handleLogout}>
+                    <BookMarked size={16} className="opacity-60" aria-hidden="true" />
+                    Logout
+                </DropdownMenuItem>
+
 
             </DropdownMenuContent>
         </DropdownMenu>

@@ -14,21 +14,18 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 import { useGetMeQuery } from "@/redux/features/auth/authApi"
+import { Link } from "react-router"
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
-    { href: "#", label: "Home", active: true },
-    { href: "#", label: "Features" },
-    { href: "#", label: "Pricing" },
-    { href: "#", label: "About" },
+    { href: "/", label: "Home", active: true },
+    { href: "/all-doctor", label: "All Doctors" },
+   
 ]
 
 export default function Navbar() {
-    const { data, isLoading } = useGetMeQuery(undefined)
-    if (isLoading) {
-        return <p>loading..</p>
-    }
-    console.log(data)
+    const { data } = useGetMeQuery(undefined)
+    
     return (
         <header className="border-b px-4 md:px-6">
             <div className="flex h-16 items-center justify-between gap-4">
@@ -116,7 +113,7 @@ export default function Navbar() {
                     {
                         data && data?.email ? <ProfileMenu />
                             : <Button asChild variant="ghost" size="sm" className="text-sm">
-                                <a href="#">Sign In</a>
+                                <Link to="/login">Sign In</Link>
                             </Button>
                     }
 
