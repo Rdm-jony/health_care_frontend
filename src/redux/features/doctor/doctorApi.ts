@@ -4,9 +4,6 @@ import type { IDoctor, IDoctorList, IResponse, ISlot, ISpecialize } from "@/type
 export const doctorApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
 
-
-
-
         getAllSpecialization: builder.query<ISpecialize[], void>({
             query: () => ({
                 url: "/doctor/specialize/all",
@@ -14,6 +11,21 @@ export const doctorApi = baseApi.injectEndpoints({
             }),
             transformResponse: (res: IResponse<ISpecialize[]>) => res.data
         }),
+        updateSpecialization: builder.mutation<IResponse<null>, { id: string, formdata: FormData }>({
+            query: (specializationInfo) => ({
+                url: `/doctor/specialize/${specializationInfo.id}`,
+                method: "PATCH",
+                data: specializationInfo.formdata
+            }),
+        }),
+        addSpecialization: builder.mutation<IResponse<null>, FormData>({
+            query: (specializationInfo) => ({
+                url: `/doctor/specialize/create`,
+                method: "POST",
+                data: specializationInfo
+            }),
+        }),
+
         permitDoctor: builder.mutation<IResponse<null>, IDoctor>({
             query: (doctorInfo) => ({
                 url: "/doctor/request-approve",
@@ -57,7 +69,16 @@ export const doctorApi = baseApi.injectEndpoints({
             transformResponse: (res: IResponse<ISlot[]>) => res.data
 
         }),
+        sendDoctorRequest: builder.mutation<IResponse<null>, undefined>({
+            query: () => ({
+                url: `/user/request-send`,
+                method: "POST",
+            }),
+            invalidatesTags: ["ME"]
+        }),
+
+
     })
 })
 
-export const { useGetAllSpecializationQuery, usePermitDoctorMutation, useRejectRequestMutation, useUpdateDoctorProfileMutation, useAllDoctorsQuery, useGetSingleDoctorQuery, useGetDoctorBookingSlotQuery } = doctorApi
+export const { useGetAllSpecializationQuery, usePermitDoctorMutation, useRejectRequestMutation, useUpdateDoctorProfileMutation, useAllDoctorsQuery, useGetSingleDoctorQuery, useGetDoctorBookingSlotQuery, useSendDoctorRequestMutation, useUpdateSpecializationMutation, useAddSpecializationMutation } = doctorApi
