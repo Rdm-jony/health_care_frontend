@@ -9,6 +9,7 @@ export const doctorApi = baseApi.injectEndpoints({
                 url: "/doctor/specialize/all",
                 method: "GET"
             }),
+            providesTags: ["specialize"],
             transformResponse: (res: IResponse<ISpecialize[]>) => res.data
         }),
         updateSpecialization: builder.mutation<IResponse<null>, { id: string, formdata: FormData }>({
@@ -17,6 +18,7 @@ export const doctorApi = baseApi.injectEndpoints({
                 method: "PATCH",
                 data: specializationInfo.formdata
             }),
+            invalidatesTags: ["specialize"]
         }),
         addSpecialization: builder.mutation<IResponse<null>, FormData>({
             query: (specializationInfo) => ({
@@ -24,6 +26,7 @@ export const doctorApi = baseApi.injectEndpoints({
                 method: "POST",
                 data: specializationInfo
             }),
+            invalidatesTags: ["specialize"]
         }),
 
         permitDoctor: builder.mutation<IResponse<null>, IDoctor>({

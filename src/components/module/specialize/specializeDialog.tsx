@@ -75,7 +75,7 @@ export default function SpecializationDialog({
                         Cancel
                     </Button>
                     {
-                        isLoading ? <LoadingButton text={mode === "add" ? "Add" : "Update"} /> : <Button onClick={handleSave}>
+                        isLoading ? <LoadingButton text={mode === "add" ? "Add" : "Update"} widthFull={false} /> : <Button onClick={handleSave}>
                             {mode === "add" ? "Add" : "Update"}
                         </Button>
                     }

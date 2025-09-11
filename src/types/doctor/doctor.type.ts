@@ -1,7 +1,8 @@
 
 export interface ISpecialize {
     _id?: string,
-    name: string
+    name: string,
+    image?:string
 }
 
 

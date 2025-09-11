@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { useGetDoctorBookingSlotQuery } from "@/redux/features/doctor/doctorApi";
 import { Alert } from "@/components/AlertDialog";
 import type { IBooking, IDoctorList } from "@/types";
@@ -50,8 +49,8 @@ export default function DoctorSlots({ doctor }: { doctor: Partial<IDoctorList> }
     };
 
     return (
-        <Card className="mt-6 shadow-xl border rounded-2xl">
-            <CardContent className="p-6 space-y-6">
+        <div className="mt-6   rounded-2xl">
+            <div className="p-6 space-y-6">
                 <h2 className="text-xl font-semibold">Book Appointment</h2>
 
                 {/* Date Buttons */}
@@ -63,7 +62,7 @@ export default function DoctorSlots({ doctor }: { doctor: Partial<IDoctorList> }
                                 key={idx}
                                 variant={selectedDate === formatted ? "default" : "outline"}
                                 onClick={() => setSelectedDate(formatted)}
-                                className="min-w-[100px]"
+                                className=""
                             >
                                 <div className="flex flex-col items-center">
                                     <span className="text-sm font-bold">
@@ -119,7 +118,7 @@ export default function DoctorSlots({ doctor }: { doctor: Partial<IDoctorList> }
                         );
                     })}
                 </div>
-            </CardContent>
-        </Card>
+            </div>
+        </div>
     );
 }

@@ -4,6 +4,7 @@ import { useGetSingleDoctorQuery } from "@/redux/features/doctor/doctorApi"
 import { useParams } from "react-router"
 import { Skeleton } from "@/components/ui/skeleton"
 import DoctorSlots from "@/components/module/doctor/DoctorsBookingSlots"
+import { Info } from "lucide-react"
 
 export default function DoctorDetailsPage() {
   const { id } = useParams()
@@ -38,17 +39,17 @@ export default function DoctorDetailsPage() {
             <img
               src={doctor.user?.picture || "/placeholder.png"}
               alt={doctor.user?.name || "Doctor"}
-              className="w-full h-full object-cover rounded-l-2xl"
+              className="w-full h-full object-cover rounded-l-2xl bg-primary"
             />
           </div>
 
           {/* Right Side: Doctor Info */}
-          <div className="w-full md:w-2/3 self-end">
+          <div className="w-full md:w-2/3 self-end border">
             <CardHeader className="p-6">
-              <CardTitle className="text-2xl font-bold">
-                {doctor.user?.name || "Unknown Doctor"}
+              <CardTitle className="text-2xl font-bold capitalize">
+                {`Dr. ${doctor.user?.name}` }
               </CardTitle>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground font-semibold">
                 {doctor.specialization?.name || "Specialist"} • {doctor.degree || "N/A"}
               </p>
               <p className="text-sm text-muted-foreground">
@@ -59,14 +60,14 @@ export default function DoctorDetailsPage() {
             <CardContent className="p-6 space-y-6 ">
               {/* About Section */}
               <section>
-                <h3 className="text-lg font-semibold">About</h3>
-                <p className="text-muted-foreground">
+                <h3 className="text-lg font-semibold flex gap-2 items-center">About <Info size={20} /></h3>
+                <p className="text-muted-foreground text-sm">
                   {doctor.about || "No description available."}
                 </p>
               </section>
 
               <Separator />
-
+              <DoctorSlots doctor={doctor} />
               {/* Contact Section */}
               {/* <section>
                 <h3 className="text-lg font-semibold">Contact</h3>
@@ -80,7 +81,7 @@ export default function DoctorDetailsPage() {
             </CardContent>
           </div>
         </div>
-        <DoctorSlots doctor={doctor} />
+
       </Card>
     </div>
   )

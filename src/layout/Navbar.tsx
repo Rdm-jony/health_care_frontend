@@ -22,6 +22,8 @@ import { Link } from "react-router"
 const baseLinks = [
     { url: "/", label: "Home", active: true },
     { url: "/all-doctor", label: "All Doctors" },
+    { url: "/about", label: "About" },
+    { url: "/contact", label: "Contact" },
 
 ]
 

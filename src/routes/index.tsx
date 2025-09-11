@@ -19,6 +19,8 @@ import PaymentSuccess from "@/pages/payment/Success";
 import PaymentCancel from "@/pages/payment/Cancel";
 import PaymentFailed from "@/pages/payment/Falied";
 import Home from "@/pages/Home";
+import About from "@/pages/About";
+import Contact from "@/pages/Contact";
 
 export const router = createBrowserRouter([
     {
@@ -46,6 +48,14 @@ export const router = createBrowserRouter([
             {
                 path: "bookings",
                 Component: BookingPage
+            },
+            {
+                path: "about",
+                Component: About
+            },
+            {
+                path: "contact",
+                Component: Contact
             }
 
 
