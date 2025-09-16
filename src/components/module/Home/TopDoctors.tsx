@@ -10,7 +10,7 @@ const TopDoctors = () => {
     return (
         <div>
             <ComponentTitle title="Top Doctors to Book" subTitle="Simply browse through our extensive list of trusted doctors." />
-            <div className="flex gap-10">
+            <div className="flex gap-10 md:flex-nowrap flex-wrap">
                 {
                     doctors && doctors.data.map(doctor => <DoctorListCard key={doctor._id} doctor={doctor} />)
                 }

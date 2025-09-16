@@ -10,9 +10,6 @@ export const paymentApi = baseApi.injectEndpoints({
             }),
         }),
     
-     
-        
-
     })
 })
 

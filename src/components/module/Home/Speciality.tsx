@@ -11,7 +11,7 @@ const Speciality = () => {
     return (
         <div>
             <ComponentTitle title="Find by Speciality" subTitle="Simply browse through our extensive list of trusted doctors, schedule your appointment hassle-free." />
-            <div className="flex gap-5 justify-center">
+            <div className="flex gap-5 justify-center flex-wrap">
                 {
                     data && data?.map(item => (
                         <Link key={item._id} to={`/all-doctor?specialization.name=${item.name}`}>

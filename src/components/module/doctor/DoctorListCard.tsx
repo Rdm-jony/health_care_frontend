@@ -10,10 +10,10 @@ import { Link } from "react-router";
 
 const DoctorListCard = ({ doctor }: { doctor: IDoctorList }) => {
     return (
-        <Link to={`/details/${doctor._id}`}>
+        <Link to={`/details/${doctor._id}`} className="w-full">
             <Card
                 key={doctor._id}
-                className="flex flex-col pt-0 h-[350px]  overflow-hidden rounded-2xl border shadow-sm hover:shadow-md transition-all  max-h-[500px] sm:max-h-[450px]"
+                className="flex  flex-col pt-0 h-[350px]  overflow-hidden rounded-2xl border shadow-sm hover:shadow-md transition-all  max-h-[500px] sm:max-h-[450px]"
             >
                 {/* Image Section */}
                 <div className="w-full h-2/3 bg-gray-50 flex-shrink-0 p-5 pb-0">

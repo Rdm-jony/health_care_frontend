@@ -8,8 +8,8 @@ const Banner = () => {
     return (
         <section className="relative min-h-[calc(100vh-100px)] bg-primary flex flex-col lg:flex-row items-center justify-between px-6 lg:px-20 py-12">
             {/* Left content */}
-            <div className="space-y-6 max-w-2xl z-10">
-                <h1 className="text-4xl lg:text-6xl font-bold text-white leading-tight">
+            <div className="space-y-6 md:max-w-2xl z-10">
+                <h1 className="text-4xl lg:text-6xl font-bold text-white md:text-left text-center leading-tight">
                     Book Appointment <br />
                     With Trusted Doctors
                 </h1>

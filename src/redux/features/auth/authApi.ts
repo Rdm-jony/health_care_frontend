@@ -76,7 +76,15 @@ export const authApi = baseApi.injectEndpoints({
                 method: "POST",
             })
         }),
+        getAllUsers: builder.query<IResponse<null>, object>({
+            query: (params) => ({
+                url: "/user/all-users",
+                method: "GET",
+                params: params
+            })
+        }),
+        
     })
 })
 
-export const { useRegisterMutation, useLoginMutation, useSendOtpMutation, useVerifyOtpMutation, useForgetPasswordMutation, useResetPasswordMutation, useGetMeQuery, useGetAllPendingReqQuery, useUpdateUserMutation,useLogoutMutation } = authApi
+export const { useRegisterMutation, useLoginMutation, useSendOtpMutation, useVerifyOtpMutation, useForgetPasswordMutation, useResetPasswordMutation, useGetMeQuery, useGetAllPendingReqQuery, useUpdateUserMutation, useLogoutMutation,useGetAllUsersQuery } = authApi
