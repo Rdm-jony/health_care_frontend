@@ -1,8 +1,8 @@
 import StatsCard from "@/components/module/stats/StatsCard";
 import { useUserStatsQuery } from "@/redux/features/stats/statsApi";
 import { Ban, Calendar, Clock, User, UserPlus } from "lucide-react";
-import UsersRoleChart from "./UserRoleChart";
 import RecentUsers from "@/components/module/admin/RecentUsers";
+import Chart from "./Chart";
 
 const Overview = () => {
     const { data } = useUserStatsQuery()
@@ -16,7 +16,7 @@ const Overview = () => {
                 <StatsCard title="New Users (30d)" bgColor="bg-purple-500" value={data?.newUsersInLast30Days || 0} icon={<Calendar />} />
                 <StatsCard title="Pending Requests" bgColor="bg-yellow-500" value={data?.totalPending || 0} icon={<Clock />} />
             </div>
-            <UsersRoleChart data={data?.usersByRole || []} />
+            <Chart data={data?.usersByRole || []} />
             <RecentUsers />
         </div>
     );

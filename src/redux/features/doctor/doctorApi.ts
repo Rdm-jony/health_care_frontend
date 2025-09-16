@@ -35,6 +35,8 @@ export const doctorApi = baseApi.injectEndpoints({
                 method: "POST",
                 data: doctorInfo
             }),
+            invalidatesTags: ["request"],
+
         }),
         rejectRequest: builder.mutation<IResponse<null>, string>({
             query: (userId) => ({
@@ -62,7 +64,7 @@ export const doctorApi = baseApi.injectEndpoints({
                 url: `/doctor/${doctorId}`,
                 method: "GET",
             }),
-            transformResponse: (res: IResponse<IDoctorList>) => res.data
+            transformResponse: (res: IResponse<IDoctorList>) => res.data,
         }),
         getDoctorBookingSlot: builder.query<ISlot[], { id: string, date: string }>({
             query: (data) => ({

@@ -1,5 +1,5 @@
 import { baseApi } from "@/redux/baseApi";
-import type { IResponse, IUserStats } from "@/types";
+import type { IDoctorStats, IResponse, ISpecializeStats, IUserStats } from "@/types";
 
 export const statsApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -10,8 +10,22 @@ export const statsApi = baseApi.injectEndpoints({
             }),
             transformResponse: (res: IResponse<IUserStats>) => res.data
         }),
+        specializeStats: builder.query<ISpecializeStats, void>({
+            query: () => ({
+                url: `/stats/specialize`,
+                method: "GET",
+            }),
+            transformResponse: (res: IResponse<ISpecializeStats>) => res.data
+        }),
+        doctorStats: builder.query<IDoctorStats, void>({
+            query: () => ({
+                url: `/stats/doctor`,
+                method: "GET",
+            }),
+            transformResponse: (res: IResponse<IDoctorStats>) => res.data
+        }),
 
     })
 })
 
-export const { useUserStatsQuery } = statsApi
+export const { useUserStatsQuery, useSpecializeStatsQuery ,useDoctorStatsQuery} = statsApi

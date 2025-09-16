@@ -19,7 +19,7 @@ const Speciality = () => {
                                 <div className="w-24 h-24 bg-primary/10 p-5 border rounded-full">
                                     <img src={item.image} alt="" />
                                 </div>
-                                <p className="text-sm mt-2 capitalize">{item.name}</p>
+                                <p className="text-smP mt-2 capitalize">{item.name}</p>
                             </div>
                         </Link>
                     ))

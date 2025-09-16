@@ -10,7 +10,7 @@ type StatsCardProps = {
 const StatsCard = ({ title, value, icon, bgColor }: StatsCardProps) => {
     return (
         <div
-            className={`flex items-center justify-between p-4 shadow rounded-2xl text-white ${bgColor}`}
+            className={`flex items-center justify-between p-10 shadow rounded-2xl text-white ${bgColor}`}
         >
             <div>
                 <p className="text-sm opacity-80">{title}</p>

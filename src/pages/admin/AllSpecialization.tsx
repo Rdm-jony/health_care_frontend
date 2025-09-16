@@ -10,12 +10,15 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { useAddSpecializationMutation, useGetAllSpecializationQuery, useUpdateSpecializationMutation } from "@/redux/features/doctor/doctorApi"
-import { Edit, Plus } from "lucide-react"
+import { Atom, Edit, Plus } from "lucide-react"
 import SpecializationDialog from "@/components/module/specialize/specializeDialog"
 import { toast } from "sonner"
+import { useSpecializeStatsQuery } from "@/redux/features/stats/statsApi"
+import StatsCard from "@/components/module/stats/StatsCard"
 
 export default function AllSpecialization() {
     const { data } = useGetAllSpecializationQuery()
+    const { data: specializeStats } = useSpecializeStatsQuery()
 
     const [updateSpecialize, { isLoading: updateLoading }] = useUpdateSpecializationMutation()
     const [addSpecialize, { isLoading: addLoading }] = useAddSpecializationMutation()
@@ -56,9 +59,16 @@ export default function AllSpecialization() {
     }
 
 
-
     return (
-        <div className="p-4">
+        <div className="p-4 space-y-10">
+
+
+            <div className="w-1/3">
+                <StatsCard title="Total Specialization" value={specializeStats?.totalSpecialize || 0} icon={<Atom />} bgColor="bg-green-500" />
+            </div>
+
+
+
             <div className="flex justify-between items-center">
                 <h2 className="text-xl font-semibold mb-4">All Specializations</h2>
                 <Button

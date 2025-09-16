@@ -5,15 +5,15 @@ type RoleData = {
     count: number
 }
 
-type UsersByRoleChartProps = {
+type ChartProps = {
     data: RoleData[]
 }
 
 const COLORS = ["#3b82f6", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6"] // Tailwind colors
 
-export default function UsersRoleChart({ data }: UsersByRoleChartProps) {
+export default function Chart({ data }:ChartProps) {
     return (
-        <div className="bg-white shadow rounded-2xl p-4">
+        <div className="bg-white shadow rounded-2xl p-4 grow">
             <h2 className="text-lg font-semibold mb-4">Users by Role</h2>
             <ResponsiveContainer width="100%" height={300}>
                 <PieChart>

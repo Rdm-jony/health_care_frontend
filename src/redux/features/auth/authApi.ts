@@ -60,6 +60,7 @@ export const authApi = baseApi.injectEndpoints({
                 url: "/user/request/all",
                 method: "GET"
             }),
+            providesTags:["request"],
             transformResponse: (res: IResponse<IUser[]>) => res.data
         }),
         updateUser: builder.mutation<IResponse<null>, { data: FormData, id: string }>({

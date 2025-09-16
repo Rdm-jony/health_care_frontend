@@ -1,4 +1,5 @@
 import AddDoctorPage from "@/pages/admin/AddDoctorPage";
+import AllDoctors from "@/pages/admin/AllDoctors";
 import AllSpecialization from "@/pages/admin/AllSpecialization";
 import AllUsers from "@/pages/admin/AllUsers";
 import Overview from "@/pages/admin/Overview";
@@ -27,6 +28,11 @@ export const adminSidebarItems: ISidebarItem[] = [
                 title: "All User",
                 url: "/admin/all-users",
                 component: AllUsers
+            },
+            {
+                title: "All Doctor",
+                url: "/admin/all-doctor",
+                component: AllDoctors
             },
 
         ]

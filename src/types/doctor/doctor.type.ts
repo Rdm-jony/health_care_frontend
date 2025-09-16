@@ -2,7 +2,7 @@
 export interface ISpecialize {
     _id?: string,
     name: string,
-    image?:string
+    image?: string,
 }
 
 
@@ -35,6 +35,8 @@ export interface IDoctorList {
         gender?: string
         address?: string
         picture?: string
+        role?: string
+
     }
     about: string
     degree?: string
