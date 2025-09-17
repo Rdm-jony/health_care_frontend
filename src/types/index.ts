@@ -5,6 +5,7 @@ export type { IRegister, ILogin, IResestPassword, TRole, IUser } from "@/types/a
 export type { ISpecialize, IDoctor, IDoctorList, ISlot } from "@/types/doctor/doctor.type"
 export type { IBooking } from "@/types/booking/booking.type"
 export type { IUserStats, IDoctorStats, ISpecializeStats } from "@/types/stats/stats.type"
+export type { IChat } from "@/types/chat/chat.type"
 
 export interface IResponse<T> {
     success: boolean,
