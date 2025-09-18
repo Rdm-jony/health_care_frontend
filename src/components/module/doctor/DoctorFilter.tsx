@@ -1,17 +1,18 @@
+import FilterSkeleton from "@/components/FliterSkeleton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useGetAllSpecializationQuery } from "@/redux/features/doctor/doctorApi";
 import { Search } from "lucide-react";
 import { useSearchParams } from "react-router";
 
-const DoctorFilter = () => {
+const DoctorFilter = ({ setPage }: { setPage: (number:number) => void }) => {
     const { data, isLoading } = useGetAllSpecializationQuery();
     const [searchParam, setSearchParam] = useSearchParams();
     const selectedSpecialize = searchParam.get("specialization.name") || undefined;
     const searchValue = searchParam.get("searchTerm") || undefined;
 
     if (isLoading) {
-        return <p>Loading...</p>;
+        return <FilterSkeleton />
     }
 
     const resetFilter = () => {
@@ -25,6 +26,8 @@ const DoctorFilter = () => {
         const params = new URLSearchParams(searchParam);
         params.set("specialization.name", value);
         setSearchParam(params);
+        setPage(1)
+
     };
     const handleSearchFilter = (value: string) => {
         const params = new URLSearchParams(searchParam);
@@ -33,7 +36,7 @@ const DoctorFilter = () => {
     };
 
     return (
-        <aside className="w-full lg:w-1/4 md:block hidden min-h-screen p-4 border-r bg-gray-50 space-y-4">
+        <aside className="w-full lg:w-1/4 md:block hidden min-h-screen p-4 border-r bg-gray-50 dark:bg-gray-900 space-y-4">
             {/* Reset Button */}
             <div className="flex justify-end">
                 <Button variant="link" size="sm" onClick={resetFilter}>

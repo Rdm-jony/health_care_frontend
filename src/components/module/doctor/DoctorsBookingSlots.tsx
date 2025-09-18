@@ -7,8 +7,10 @@ import type { IBooking, IDoctorList } from "@/types";
 import { useCreateBookingMutation } from "@/redux/features/booking/bookingApi";
 import { toast } from "sonner";
 import { convertToBDTime } from "@/utils/converBdTimeZone";
+import { useNavigate } from "react-router";
 
 export default function DoctorSlots({ doctor }: { doctor: Partial<IDoctorList> }) {
+    const navigate = useNavigate()
     const today = new Date();
     const next7Days = Array.from({ length: 7 }, (_, i) => {
         const date = new Date();
@@ -42,6 +44,7 @@ export default function DoctorSlots({ doctor }: { doctor: Partial<IDoctorList> }
             if (response.success) {
                 toast.success(response.message);
                 setOpenAlert(false);
+                navigate("/bookings")
             }
         } catch (error: any) {
             toast.error(error?.data?.message || "Booking failed");
@@ -51,7 +54,6 @@ export default function DoctorSlots({ doctor }: { doctor: Partial<IDoctorList> }
     return (
         <div className="mt-6   rounded-2xl">
             <div className="p-6 space-y-6">
-                <h2 className="text-xl font-semibold">Book Appointment</h2>
 
                 {/* Date Buttons */}
                 <div className="flex gap-2 overflow-x-auto">

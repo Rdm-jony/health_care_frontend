@@ -6,7 +6,7 @@ const About = () => {
             <div className="container mx-auto py-16 px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 md:grid-cols-2  items-center gap-8">
                     <div className="max-w-lg">
-                        <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">About Us</h2>
+                        <h2 className="text-3xl font-extrabold text-gray-900 dark:text-gray-500 sm:text-4xl">About Us</h2>
                         <p className="mt-4 text-gray-600 text-justify text-sm">Welcome to Prescripto, your trusted partner in managing your healthcare needs conveniently and efficiently. At Prescripto, we understand the challenges individuals face when it comes to scheduling doctor appointments and managing their health records.
 
                             Prescripto is committed to excellence in healthcare technology. We continuously strive to enhance our platform, integrating the latest advancements to improve user experience and deliver superior service. Whether you're booking your first appointment or managing ongoing care, Prescripto is here to support you every step of the way.</p>

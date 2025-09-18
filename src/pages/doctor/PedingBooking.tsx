@@ -50,7 +50,7 @@ const PedingBooking = () => {
             </TableHeader>
             <TableBody>
                 {
-                    data && data?.map(item => <TableRow>
+                    data && data?.map(item => <TableRow className="bg-gray-900">
                         <TableCell className="font-medium">
                             {
                                 "object" == typeof item.user && <div className="flex gap-2 items-center">

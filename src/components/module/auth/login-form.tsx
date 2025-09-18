@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import doctorImg from "@/assets/images/doctor.png";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -24,6 +24,8 @@ const loginFormSchema = z.object({
 })
 
 export function LoginForm() {
+  const location = useLocation()
+  console.log(location.state)
   const navigate = useNavigate()
   const [login, { isLoading }] = useLoginMutation()
   const [openForgetPassDialog, setOpenForgetPassDialog] = useState<boolean>(false)
@@ -41,7 +43,7 @@ export function LoginForm() {
       const response = await login(data).unwrap()
       if (response?.success) {
         toast.success(response?.message)
-        navigate("/")
+        navigate(location?.state ?? "/")
       }
     } catch (error: any) {
       toast.error(error?.data.message)

@@ -13,9 +13,6 @@ export default function MobileFilter() {
   const searchValue = searchParam.get("searchTerm") || undefined;
 
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
   const resetFilter = async () => {
     const params = new URLSearchParams(searchParam);
     params.delete("specialization.name");

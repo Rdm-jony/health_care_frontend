@@ -16,30 +16,25 @@ import {
 import { useGetMeQuery } from "@/redux/features/auth/authApi"
 import { getDashboardLink } from "@/utils/getDashboardLink"
 import { useMemo } from "react"
-import { Link } from "react-router"
+import { Link, useLocation } from "react-router" // ✅ useLocation for active effect
 
-// Navigation links array to be used in both desktop and mobile menus
+// Base navigation links
 const baseLinks = [
-    { url: "/", label: "Home", active: true },
+    { url: "/", label: "Home" },
     { url: "/all-doctor", label: "All Doctors" },
     { url: "/about", label: "About" },
     { url: "/contact", label: "Contact" },
-
 ]
-
 
 export default function Navbar() {
     const { data } = useGetMeQuery(undefined)
+    const location = useLocation()
 
+    // merge dashboard link if user logged in
     const navigationLinks = useMemo(() => {
         const dashboardLink = getDashboardLink(data)
-        return [
-            ...baseLinks,
-            ...(dashboardLink ? [dashboardLink] : []),
-        ]
+        return [...baseLinks, ...(dashboardLink ? [dashboardLink] : [])]
     }, [data])
-    console.log(navigationLinks)
-
     return (
         <header className="border-b px-4 md:px-6">
             <div className="flex h-16 items-center justify-between gap-4">
@@ -83,53 +78,66 @@ export default function Navbar() {
                         <PopoverContent align="start" className="w-36 p-1 md:hidden">
                             <NavigationMenu className="max-w-none *:w-full">
                                 <NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
-                                    {navigationLinks?.map((link, index) => (
-                                        <NavigationMenuItem key={index} className="w-full">
-                                            <NavigationMenuLink
-                                                className="py-1.5"
-                                                asChild
-                                            >
-                                                <Link to={link?.url ?? "/"}>{link?.label}</Link>
-                                            </NavigationMenuLink>
-                                        </NavigationMenuItem>
-                                    ))}
+                                    {navigationLinks?.map((link, index) => {
+                                        const isActive = location.pathname === link.url
+                                        return (
+                                            <NavigationMenuItem key={index} className="w-full">
+                                                <NavigationMenuLink
+                                                    asChild
+                                                    className={`py-1.5 w-full block rounded-md transition-colors ${isActive
+                                                        ? "text-primary font-semibold bg-primary/10"
+                                                        : "text-muted-foreground hover:text-primary"
+                                                        }`}
+                                                >
+                                                    <Link to={link?.url ?? "/"}>{link?.label}</Link>
+                                                </NavigationMenuLink>
+                                            </NavigationMenuItem>
+                                        )
+                                    })}
                                 </NavigationMenuList>
                             </NavigationMenu>
                         </PopoverContent>
                     </Popover>
-                    {/* Main nav */}
+
+                    {/* Desktop main nav */}
                     <div className="flex items-center gap-6">
-                        <a href="#" className="text-primary hover:text-primary/90">
+                        <Link to="/" className="text-primary hover:text-primary/90">
                             <Logo />
-                        </a>
-                        {/* Navigation menu */}
+                        </Link>
+
                         <NavigationMenu className="max-md:hidden">
                             <NavigationMenuList className="gap-2">
-                                {navigationLinks.map((link, index) => (
-                                    <NavigationMenuItem key={index}>
-                                        <NavigationMenuLink
-                                            asChild
-                                            className="text-muted-foreground hover:text-primary py-1.5 font-medium"
-                                        >
-                                            <Link to={link?.url ?? "/"}>{link?.label}</Link>
-
-                                        </NavigationMenuLink>
-                                    </NavigationMenuItem>
-                                ))}
+                                {navigationLinks.map((link, index) => {
+                                    const isActive = location.pathname === link.url
+                                    return (
+                                        <NavigationMenuItem key={index}>
+                                            <NavigationMenuLink
+                                                asChild
+                                                className={`py-1.5 font-medium rounded-md transition-colors ${isActive
+                                                    ? "text-primary font-semibold border-b-2 border-primary"
+                                                    : "text-muted-foreground hover:text-primary"
+                                                    }`}
+                                            >
+                                                <Link to={link?.url ?? "/"}>{link?.label}</Link>
+                                            </NavigationMenuLink>
+                                        </NavigationMenuItem>
+                                    )
+                                })}
                             </NavigationMenuList>
                         </NavigationMenu>
                     </div>
                 </div>
+
                 {/* Right side */}
                 <div className="flex items-center gap-2">
                     <ModeToggle />
-                    {
-                        data && data?.email ? <ProfileMenu />
-                            : <Button asChild variant="ghost" size="sm" className="text-sm">
-                                <Link to="/login">Sign In</Link>
-                            </Button>
-                    }
-
+                    {data && data?.email ? (
+                        <ProfileMenu name={data?.name} picture={data.picture} />
+                    ) : (
+                        <Button asChild variant="ghost" size="sm" className="text-sm">
+                            <Link to="/login">Sign In</Link>
+                        </Button>
+                    )}
                 </div>
             </div>
         </header>

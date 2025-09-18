@@ -1,19 +1,25 @@
+import BookingCardSkeleton from "@/components/BookingCardSkeleton";
 import BookingCard from "@/components/module/booking/BookingCard";
 import { useGetUserBookingQuery } from "@/redux/features/booking/bookingApi";
 
 const BookingPage = () => {
-    const { data, isLoading } = useGetUserBookingQuery()
-    if (isLoading) {
-        return <p>loading</p>
-    }
-    console.log(data)
+    const { data, isLoading } = useGetUserBookingQuery();
+
     return (
-        <div>
-            {
-                data?.map(booking => <BookingCard key={booking?._id} booking={booking} />)
-            }
+        <div className="space-y-6">
+            {isLoading ? (
+                <>
+                    <BookingCardSkeleton />
+                    <BookingCardSkeleton />
+                    <BookingCardSkeleton />
+                </>
+            ) : (
+                data?.map((booking) => (
+                    <BookingCard key={booking?._id} booking={booking} />
+                ))
+            )}
         </div>
     );
 };
 
-export default BookingPage;
+export default BookingPage

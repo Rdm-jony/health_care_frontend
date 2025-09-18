@@ -1,13 +1,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { useGetSingleDoctorQuery } from "@/redux/features/doctor/doctorApi"
-import { useParams } from "react-router"
+import { Link, useLocation, useParams } from "react-router"
 import { Skeleton } from "@/components/ui/skeleton"
 import DoctorSlots from "@/components/module/doctor/DoctorsBookingSlots"
 import { Info } from "lucide-react"
+import { useGetMeQuery } from "@/redux/features/auth/authApi"
 
 export default function DoctorDetailsPage() {
+  const location = useLocation()
   const { id } = useParams()
+  const { data: user } = useGetMeQuery(undefined)
   const { data: doctor, isLoading } = useGetSingleDoctorQuery(id, { skip: !id })
 
   if (isLoading) {
@@ -47,7 +50,7 @@ export default function DoctorDetailsPage() {
           <div className="w-full md:w-2/3 self-end border">
             <CardHeader className="p-6">
               <CardTitle className="text-2xl font-bold capitalize">
-                {`Dr. ${doctor.user?.name}` }
+                {`Dr. ${doctor.user?.name}`}
               </CardTitle>
               <p className="text-muted-foreground font-semibold">
                 {doctor.specialization?.name || "Specialist"} • {doctor.degree || "N/A"}
@@ -67,17 +70,13 @@ export default function DoctorDetailsPage() {
               </section>
 
               <Separator />
-              <DoctorSlots doctor={doctor} />
+              <h2 className="text-xl font-semibold">Book Appointment</h2>
+              {
+                user ? <DoctorSlots doctor={doctor} /> : <p className="text-sm">Please Sign In for appointment <Link to="/login" className="text-primary font-semibold underline" state={location.pathname}>Sign In</Link></p>
+              }
+
               {/* Contact Section */}
-              {/* <section>
-                <h3 className="text-lg font-semibold">Contact</h3>
-                <ul className="space-y-1 text-muted-foreground">
-                  {doctor.user?.email && <li>Email: {doctor.user.email}</li>}
-                  {doctor.user?.phone && <li>Phone: {doctor.user.phone}</li>}
-                  {doctor.user?.gender && <li>Gender: {doctor.user.gender}</li>}
-                  {doctor.user?.address && <li>Address: {doctor.user.address}</li>}
-                </ul>
-              </section> */}
+
             </CardContent>
           </div>
         </div>

@@ -1,11 +1,11 @@
 
 const Contact = () => {
     return (
-        <section className=" dark:bg-slate-800" id="contact">
+        <section className=" dark:bg-gray-900" id="contact">
             <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
                 <div className="mb-4">
                     <div className="mb-6 max-w-3xl text-center sm:text-center md:mx-auto md:mb-12">
-                        
+
                         <h2
                             className="font-heading mb-4 font-bold tracking-tight text-gray-900 dark:text-white text-3xl sm:text-5xl">
                             Get in Touch
