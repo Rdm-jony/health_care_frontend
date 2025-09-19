@@ -60,7 +60,7 @@ export const authApi = baseApi.injectEndpoints({
                 url: "/user/request/all",
                 method: "GET"
             }),
-            providesTags:["request"],
+            providesTags: ["request"],
             transformResponse: (res: IResponse<IUser[]>) => res.data
         }),
         updateUser: builder.mutation<IResponse<null>, { data: FormData, id: string }>({
@@ -84,8 +84,15 @@ export const authApi = baseApi.injectEndpoints({
                 params: params
             })
         }),
-        
+        loginWithGoogle: builder.query<IResponse<null>, void>({
+            query: () => ({
+                url: "/auth/google",
+                method: "GET",
+            })
+        }),
+
+
     })
 })
 
-export const { useRegisterMutation, useLoginMutation, useSendOtpMutation, useVerifyOtpMutation, useForgetPasswordMutation, useResetPasswordMutation, useGetMeQuery, useGetAllPendingReqQuery, useUpdateUserMutation, useLogoutMutation,useGetAllUsersQuery } = authApi
+export const { useRegisterMutation, useLoginMutation, useSendOtpMutation, useVerifyOtpMutation, useForgetPasswordMutation, useResetPasswordMutation, useGetMeQuery, useGetAllPendingReqQuery, useUpdateUserMutation, useLogoutMutation, useGetAllUsersQuery,useLoginWithGoogleQuery } = authApi
