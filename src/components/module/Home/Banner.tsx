@@ -7,7 +7,7 @@ import { motion } from "motion/react"
 
 const Banner = () => {
     return (
-        <section className="relative min-h-[calc(100vh-100px)] bg-primary dark:bg-gray-900 flex flex-col lg:flex-row items-center justify-between px-6 lg:px-20 py-12">
+        <section className="relative min-h-[calc(100vh-100px)] bg-primary dark:bg-gray-950 flex flex-col lg:flex-row items-center justify-between px-6 lg:px-20 py-12">
             {/* Left content */}
             <div className="space-y-6 md:max-w-2xl z-10">
                 <motion.h1 initial={{ opacity: 0, y: 100 }} animate={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="text-4xl lg:text-6xl font-bold text-white md:text-left text-center leading-tight">

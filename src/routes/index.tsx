@@ -8,7 +8,7 @@ import VerifyPage from "@/pages/VerifyPage";
 import type { TRole } from "@/types";
 import { generateRoutes } from "@/utils/generateRoutes";
 import { withAuth } from "@/utils/withAuth";
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 import { adminSidebarItems } from "./adminSidebarItems";
 import AllDoctor from "@/pages/AllDoctor";
 import Profile from "@/pages/Profile";
@@ -80,12 +80,12 @@ export const router = createBrowserRouter([
     {
         path: "/admin",
         Component: withAuth(DashboardLayout, role.ADMIN as TRole),
-        children: [...generateRoutes(adminSidebarItems)]
+        children: [{ index: true, element: <Navigate to="/admin/overview" />}, ...generateRoutes(adminSidebarItems)]
     },
     {
         path: "/doctor",
         Component: withAuth(DashboardLayout, role.DOCTOR as TRole),
-        children: [...generateRoutes(doctorSidebarItems)]
+        children: [{ index: true, element: <Navigate to="/doctor/pending-booking" />},...generateRoutes(doctorSidebarItems)]
     },
     {
         path: "/payment/success",

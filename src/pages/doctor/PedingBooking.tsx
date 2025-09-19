@@ -31,7 +31,7 @@ const PedingBooking = () => {
             if (response.success) {
                 toast.success(response.message)
             }
-        } catch (error:any) {
+        } catch (error: any) {
             toast.error(error?.data.message)
         }
     }
@@ -50,7 +50,7 @@ const PedingBooking = () => {
             </TableHeader>
             <TableBody>
                 {
-                    data && data?.map(item => <TableRow className="bg-gray-900">
+                    data && data?.map(item => <TableRow className="bg-gray-950">
                         <TableCell className="font-medium">
                             {
                                 "object" == typeof item.user && <div className="flex gap-2 items-center">

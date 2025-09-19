@@ -17,7 +17,7 @@ const DoctorListCard = ({ doctor }: { doctor: IDoctorList }) => {
           className="flex flex-col pt-0 h-[350px] overflow-hidden rounded-2xl border shadow-sm hover:shadow-lg transition-shadow max-h-[500px] sm:max-h-[450px]"
         >
           {/* Image Section */}
-          <div className="w-full h-2/3 bg-gray-50 dark:bg-gray-900 flex-shrink-0 p-5 pb-0">
+          <div className="w-full h-2/3 bg-gray-50 dark:bg-gray-950 flex-shrink-0 p-5 pb-0">
             <img
               src={doctor.user?.picture || avatarImg}
               className="h-full mx-auto object-contain"

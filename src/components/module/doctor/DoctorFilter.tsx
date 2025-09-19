@@ -5,7 +5,7 @@ import { useGetAllSpecializationQuery } from "@/redux/features/doctor/doctorApi"
 import { Search } from "lucide-react";
 import { useSearchParams } from "react-router";
 
-const DoctorFilter = ({ setPage }: { setPage: (number:number) => void }) => {
+const DoctorFilter = ({ setPage }: { setPage: (number: number) => void }) => {
     const { data, isLoading } = useGetAllSpecializationQuery();
     const [searchParam, setSearchParam] = useSearchParams();
     const selectedSpecialize = searchParam.get("specialization.name") || undefined;
@@ -36,7 +36,7 @@ const DoctorFilter = ({ setPage }: { setPage: (number:number) => void }) => {
     };
 
     return (
-        <aside className="w-full lg:w-1/4 md:block hidden min-h-screen p-4 border-r bg-gray-50 dark:bg-gray-900 space-y-4">
+        <aside className="w-full lg:w-1/4 md:block hidden min-h-screen p-4 border-r bg-gray-50 dark:bg-gray-950 space-y-4">
             {/* Reset Button */}
             <div className="flex justify-end">
                 <Button variant="link" size="sm" onClick={resetFilter}>

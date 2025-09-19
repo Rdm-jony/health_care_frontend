@@ -82,7 +82,7 @@ export default function AllSpecialization() {
                 </Button>
             </div>
 
-            <Table>
+            <Table className="bg-gray-950">
                 <TableHeader>
                     <TableRow>
                         <TableHead className="w-[250px]">ID</TableHead>

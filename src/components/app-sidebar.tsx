@@ -3,6 +3,7 @@ import * as React from "react"
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -15,6 +16,7 @@ import {
 import { getSidebarItems } from "@/utils/getSidebarItems"
 import { useGetMeQuery } from "@/redux/features/auth/authApi"
 import { Link } from "react-router"
+import { Button } from "./ui/button"
 
 
 
@@ -36,7 +38,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {item.items.map((item,idx:number) => (
+                {item.items.map((item, idx: number) => (
                   <SidebarMenuItem key={idx}>
                     <SidebarMenuButton asChild >
                       <Link to={item?.url}>{item.title}</Link>
@@ -49,6 +51,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         ))}
       </SidebarContent>
       <SidebarRail />
+      <SidebarFooter>
+        <Link to="/">
+          <Button className="w-full">Home</Button>
+        </Link>
+      </SidebarFooter>
     </Sidebar>
   )
 }

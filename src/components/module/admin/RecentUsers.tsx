@@ -7,7 +7,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import {  useGetAllUsersQuery } from "@/redux/features/auth/authApi"
+import { useGetAllUsersQuery } from "@/redux/features/auth/authApi"
 import type { IUser } from "@/types"
 
 
@@ -20,7 +20,7 @@ export default function RecentUsers() {
     }
     const users: IUser[] = Array.isArray(data?.data) ? data.data : []
     return (
-        <div className="bg-white shadow rounded-2xl p-4">
+        <div className="bg-white dark:bg-gray-950 shadow rounded-2xl p-4">
             <h2 className="text-lg font-semibold mb-4">Recent Users</h2>
             <Table>
                 <TableHeader>

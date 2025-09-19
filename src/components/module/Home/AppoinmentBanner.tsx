@@ -5,7 +5,7 @@ import { Link } from "react-router";
 
 const AppoinmentBanner = () => {
     return (
-        <div className="bg-primary dark:bg-gray-900 h-[500px] p-10 md:p-20 flex flex-col md:flex-row items-center relative overflow-hidden rounded-2xl">
+        <div className="bg-primary dark:bg-gray-950 h-[500px] p-10 md:p-20 flex flex-col md:flex-row items-center relative overflow-hidden rounded-2xl">
 
             {/* Left Section */}
             <motion.div

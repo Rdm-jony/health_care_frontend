@@ -25,7 +25,7 @@ const AllDoctors = () => {
                 <StatsCard title="New Doctor (7d)" bgColor="bg-green-500" value={data?.newDoctorsInLast7Days || 0} icon={<UserPlus />} />
                 <StatsCard title="New Doctors (30d)" bgColor="bg-purple-500" value={data?.newDoctorsInLast30Days || 0} icon={<Calendar />} />
             </div>
-            <div className="relative bg-white w-1/3 mt-10">
+            <div className="relative bg-white dark:bg-gray-900 w-1/3 mt-10">
                 <Input
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -37,7 +37,7 @@ const AllDoctors = () => {
                     <Search size={16} aria-hidden="true" />
                 </div>
             </div>
-            <Table>
+            <Table className="dark:bg-gray-950">
                 <TableHeader>
                     <TableRow>
                         <TableHead>Image</TableHead>

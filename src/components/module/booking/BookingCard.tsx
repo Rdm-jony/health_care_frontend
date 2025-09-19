@@ -7,6 +7,7 @@ import { convertToBDTime } from "@/utils/converBdTimeZone"
 import { useInitPaymentMutation } from "@/redux/features/payment/paymentApi"
 import { toast } from "sonner"
 import { bookingStatus } from "@/constants/booingStatus"
+import LoadingButton from "@/components/loading-buttom"
 
 interface BookingCardProps {
     booking: IBooking
@@ -14,14 +15,14 @@ interface BookingCardProps {
 }
 
 export default function BookingCard({ booking }: BookingCardProps) {
-    const [initPayment] = useInitPaymentMutation()
+    const [initPayment, { isLoading }] = useInitPaymentMutation()
     const doctor = typeof booking.doctor === "string" ? null : booking.doctor
 
     const handlePayment = async (bookingId: string) => {
         try {
             const response = await initPayment(bookingId).unwrap()
             if (response.success) {
-                window.location.href=response.data
+                window.location.href = response.data
             }
 
         } catch (error: any) {
@@ -86,9 +87,12 @@ export default function BookingCard({ booking }: BookingCardProps) {
                 {/* Buttons */}
                 {
                     booking.status == bookingStatus.cash || booking.status == bookingStatus.complete ? <Button variant="outline" className="text-primary">Confirmed</Button> : <div className="flex flex-col gap-5">
-                        <Button onClick={() => handlePayment(booking._id as string)} variant="default" >
-                            Pay
-                        </Button>
+                        {
+                            isLoading ? <LoadingButton text="Pay" /> : <Button onClick={() => handlePayment(booking._id as string)} variant="default" >
+                                Pay
+                            </Button>
+                        }
+
                         <Button variant="destructive">
                             Cancel
                         </Button>

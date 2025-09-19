@@ -45,7 +45,7 @@ const AddDoctorPage = () => {
     }
     return (
         <div>
-            <Table>
+            <Table className="dark:bg-gray-950">
                 <TableCaption>A list of your recent invoices.</TableCaption>
                 <TableHeader>
                     <TableRow>
@@ -59,7 +59,7 @@ const AddDoctorPage = () => {
                 <TableBody>
                     {
                         Array.isArray(data) && data.map((user) => (
-                            <TableRow key={user?._id}>
+                            <TableRow key={user?._id} >
                                 <TableCell>{user.picture}</TableCell>
                                 <TableCell>{user.name}</TableCell>
                                 <TableCell>{user.email}</TableCell>
